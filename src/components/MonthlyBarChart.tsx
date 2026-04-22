@@ -31,16 +31,15 @@ export function MonthlyBarChart({ buckets }: { buckets: MonthlyBucket[] }) {
               borderRadius: "0.375rem",
               fontSize: "0.8125rem",
             }}
-            formatter={(value: unknown, name: string) => {
-              if (name === "deals") return [value, "Deals"];
+            formatter={(value, name) => {
+              const v = value as number | string;
+              if (name === "deals") return [String(v), "Deals"];
               if (name === "amount")
                 return [
-                  typeof value === "number"
-                    ? value.toLocaleString("en-US")
-                    : value,
+                  typeof v === "number" ? v.toLocaleString("en-US") : String(v),
                   "Amount excl. VAT",
                 ];
-              return [value, name];
+              return [String(v), String(name)];
             }}
           />
           <Bar dataKey="deals" fill="#2d5a3f" radius={[4, 4, 0, 0]} />
